@@ -16,7 +16,7 @@ int main(void)
 
 	Vector2 paddleSize{ 15, 100 };
 	Vector2 paddlePos{ 50, (SCREEN_HEIGHT / 2.0) - (paddleSize.y / 2.0) };
-	Paddle p1{ paddleSize, paddlePos, WHITE, WHITE };
+	Paddle p1{ paddleSize, paddlePos, WHITE };
 
 	// Main game loop
 	while (!WindowShouldClose())    // Detect window close button or ESC key

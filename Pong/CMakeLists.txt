@@ -3,7 +3,7 @@
 #
 
 # Add source to this project's executable.
-add_executable (Pong "Game.cpp" "Game.h" "Paddle.cpp" "Paddle.h" "Drawable.h" "common.h")
+add_executable (Pong "Game.cpp" "Game.h" "Paddle.cpp" "Paddle.h" "Drawable.h" "common.h" "Ball.h")
 
 target_link_libraries(${PROJECT_NAME} raylib)
 

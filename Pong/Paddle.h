@@ -10,13 +10,12 @@ private:
 	Vector2& pos;
 	Vector2& dimensions;
 
-	Color borderColor;
 	Color fillColor;
 
 	float speed;
 
 public:
-	Paddle(Vector2& dimensions, Vector2& pos, Color borderColor, Color fillColor);
+	Paddle(Vector2& dimensions, Vector2& pos, Color fillColor);
 
 	float GetHeight();
 	float GetWidth();
@@ -24,7 +23,6 @@ public:
 	const Vector2& GetPos();
 	void SetPos(Vector2& newPos);
 
-	const Color& GetBorderColor();
 	const Color& GetFillColor();
 
 	void Draw();

@@ -2,10 +2,9 @@
 
 const float Paddle::DEFAULT_SPEED = 10.0f;
 
-Paddle::Paddle(Vector2& dimensions, Vector2& pos, Color borderColor, Color fillColor) :
+Paddle::Paddle(Vector2& dimensions, Vector2& pos, Color fillColor) :
 	dimensions(dimensions),
 	pos(pos),
-	borderColor(borderColor),
 	fillColor(fillColor) {
 	speed = DEFAULT_SPEED;
 };
@@ -28,10 +27,6 @@ void Paddle::SetPos(Vector2& newPos) {
 
 void Paddle::Draw() {
 	DrawRectangleV(pos, dimensions, fillColor);
-}
-
-const Color& Paddle::GetBorderColor() {
-	return borderColor;
 }
 
 const Color& Paddle::GetFillColor() {

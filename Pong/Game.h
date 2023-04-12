@@ -5,7 +5,8 @@
 
 #include <iostream>
 #include "raylib.h"
-#include "Paddle.h"
 #include "common.h"
+#include "Paddle.h"
+#include "Ball.h"
 
 // TODO: Reference additional headers your program requires here.
