@@ -12,12 +12,14 @@ int main(void)
 
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Pong");
 
-	SetTargetFPS(60);
+	SetTargetFPS(GLOBAL_FRAME_RATE);
 
 	Vector2 paddleSize{ 15, 100 };
-	Vector2 paddlePos{ 50, (SCREEN_HEIGHT / 2.0) - (paddleSize.y / 2.0) };
-	Paddle p1{ paddleSize, paddlePos, WHITE };
-	Ball ball{ 5.0f, RED };
+	Vector2 paddle1Pos{ 50, (SCREEN_HEIGHT / 2.0) - (paddleSize.y / 2.0) };
+	Vector2 paddle2Pos{ SCREEN_WIDTH - (50 + paddleSize.x), (SCREEN_HEIGHT / 2.0) - (paddleSize.y / 2.0)};
+	Paddle p1{ paddleSize, paddle1Pos, WHITE };
+	Paddle p2{ paddleSize, paddle2Pos, WHITE };
+	Ball ball{ 5.0f, RED, p1, p2 };
 	ball.Init();
 
 	// Main game loop
@@ -25,19 +27,9 @@ int main(void)
 	{
 		BeginDrawing();
 		ClearBackground(BLACK);
-		p1.Draw();
-		p1.DrawPivot();
-
-		ball.Draw();
-		ball.Move();
-
-		if (IsKeyDown(KEY_DOWN)) {
-			p1.MoveDown();
-		}
-
-		if (IsKeyDown(KEY_UP)) {
-			p1.MoveUp();
-		}
+		p1.Update();
+		p2.Update();
+		ball.Update();
 
 		if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
 			ball.Reset();
