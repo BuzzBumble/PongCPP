@@ -87,7 +87,7 @@ float Ball::computeStartingAngle(bool goRight) {
 }
 
 void Ball::computeDirectionVector() {
-	// Why didn't I do this in radians
+	// Why didn't I do this with vectors
 	int quadrant = getAngleQuadrant();
 	float x;
 	float y;
