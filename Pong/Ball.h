@@ -18,6 +18,8 @@ private:
 
 	float ComputeStartingAngle(bool goRight);
 	void ComputeDirectionVector();
+	void CollideWithWall();
+	bool CheckCollisionWall();
 
 public:
 	Ball(float radius, Color fillColor);
@@ -27,8 +29,6 @@ public:
 	void Reset();
 
 	void CollideWithPaddle(Paddle& paddle);
-	bool CollideWithWallBottom();
-	bool CollideWithWallTop();
 
 	bool isCollidingWithPaddle(Paddle& paddle);
 

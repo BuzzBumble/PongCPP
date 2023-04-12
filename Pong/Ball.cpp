@@ -24,6 +24,9 @@ void Ball::Draw() {
 void Ball::Move() {
 	Vector2 velocity = Vector2{ direction.x * speed, direction.y * speed };
 	pos = Vector2{ pos.x + velocity.x, pos.y + velocity.y };
+	if (CheckCollisionWall()) {
+		CollideWithWall();
+	}
 }
 
 void Ball::Reset() {
@@ -35,13 +38,21 @@ void Ball::CollideWithPaddle(Paddle& paddle) {
 	
 }
 
-bool Ball::CollideWithWallBottom() {
+bool Ball::CheckCollisionWall() {
+	float bottomY = SCREEN_HEIGHT - radius;
+	float topY = radius;
+
+	if (pos.y >= bottomY || pos.y <= radius) {
+		return true;
+	}
+
 	return false;
 }
 
-bool Ball::CollideWithWallTop() {
-	return false;
+void Ball::CollideWithWall() {
+	direction.y *= -1;
 }
+
 
 bool Ball::isCollidingWithPaddle(Paddle& paddle) {
 	return CheckCollisionCircleRec(pos, radius, paddle.GetRect());
