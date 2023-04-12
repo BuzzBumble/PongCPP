@@ -7,7 +7,6 @@ const float Ball::SPEED_TRANSFER_RATIO = 0.5f;
 Ball::Ball(float radius, Color fillColor, Paddle& p1, Paddle& p2) :
 	radius(radius),
 	fillColor(fillColor),
-	angle(0.0f),
 	speed(DEFAULT_SPEED),
 	paddle1(p1),
 	paddle2(p2) {
@@ -21,8 +20,7 @@ void Ball::Update() {
 }
 
 void Ball::Init() {
-	angle = computeStartingAngle(false);
-	computeDirectionVector();
+	direction = computeStartingDirection(false);
 }
 
 void Ball::Draw() {
@@ -48,6 +46,14 @@ void Ball::Reset() {
 	pos.y = SCREEN_HEIGHT / 2.0f;
 }
 
+void Ball::SetDirection(Vector2 vector) {
+	direction = vector;
+}
+
+void Ball::SetSpeed(float newSpeed) {
+	speed = newSpeed;
+}
+
 bool Ball::checkCollisionWall() {
 	float bottomY = SCREEN_HEIGHT - radius;
 	float topY = radius;
@@ -60,7 +66,7 @@ bool Ball::checkCollisionWall() {
 }
 
 void Ball::collideWithWall() {
-	reflectAngleHorizontal();
+	SetDirection(VectorHelper::ReflectHorizontal(direction));
 }
 
 bool Ball::checkCollisionPaddle(Paddle& paddle) {
@@ -69,90 +75,14 @@ bool Ball::checkCollisionPaddle(Paddle& paddle) {
 
 void Ball::collideWithPaddle(Paddle& paddle) {
 	Paddle::Direction paddleDir = paddle.GetDirection();
-	reflectAngleVertical();
+	SetSpeed(speed * SPEED_MULTI);
+	SetDirection(VectorHelper::ReflectVertical(direction));
 	paddle.DisableCollision(10);
 }
 
-float Ball::computeStartingAngle(bool goRight) {
-	const float range = 45.0f;
-	const float leftStart = 180;
-	const float rightStart = 0;
-
-	float randAdditive = static_cast<float>(GetRandomValue(range * -1, range));
-	if (goRight) {
-		return randAdditive < 0 ? 360 + randAdditive : randAdditive;
-	} else {
-		return leftStart + randAdditive;
-	}
-}
-
-void Ball::computeDirectionVector() {
-	// Why didn't I do this with vectors
-	int quadrant = getAngleQuadrant();
-	float x;
-	float y;
-	float normalAngle = computeNormalAngle(angle) * DEG2RAD;
-	switch (quadrant) {
-	case 0:;
-		x = std::cos(angle * DEG2RAD);
-		y = std::sin(angle * DEG2RAD) * -1;
-		break;
-	case 1:
-		x = std::cos(normalAngle) * -1;
-		y = std::sin(normalAngle) * -1;
-		break;
-	case 2:
-		x = std::cos(normalAngle) * -1;
-		y = std::sin(normalAngle);
-		break;
-	case 3:
-		x = std::cos(normalAngle);
-		y = std::sin(normalAngle);
-		break;
-	default:
-		normalAngle = 0;
-		x = 0;
-		y = 0;
-		break;
-	}
-	std::cout << "NEW ANGLE: " << normalAngle * RAD2DEG << std::endl;
-	direction.x = x;
-	direction.y = y;
-}
-
-// When the ball hits a horizontal surface
-void Ball::reflectAngleHorizontal() {
-	angle = 360.0f - angle;
-	computeDirectionVector();
-}
-
-// When the ball hits a vertical surface
-void Ball::reflectAngleVertical() {
-	// 360 - angle - 180 to reflect on horizontal then flip direction
-	float newAngle = 180.0f - angle;
-	if (newAngle < 0) {
-		newAngle = 360.0f + newAngle;
-	}
-	angle = newAngle;
-	computeDirectionVector();
-}
-
-float Ball::computeNormalAngle(float originalAngle) {
-	int quadrant = getAngleQuadrant();
-	switch (quadrant) {
-	case 0:
-		return originalAngle;
-	case 1:
-		return 180.0f - originalAngle;
-	case 2:
-		return originalAngle - 180.0f;
-	case 3:
-		return 360.0f - originalAngle;
-	default:
-		return originalAngle;
-	}
-}
-
-int Ball::getAngleQuadrant() {
-	return static_cast<int>(angle / 90.0f);
+Vector2 Ball::computeStartingDirection(bool goRight) {
+	float x = goRight ? 1 : -1;
+	float y = (static_cast<float>(rand()) / static_cast<float>(RAND_MAX / 2)) - 1;
+	
+	return VectorHelper::Normalize(Vector2{ x, y });
 }

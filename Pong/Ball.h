@@ -1,6 +1,7 @@
 #pragma once
 #include "common.h"
 #include "raylib.h"
+#include "VectorHelper.h"
 #include "Drawable.h"
 #include "Paddle.h"
 
@@ -10,6 +11,8 @@ public:
 	void Init();
 	void Reset();
 	void Update();
+	void SetDirection(Vector2 vector);
+	void SetSpeed(float newSpeed);
 
 private:
 	static const float DEFAULT_SPEED;
@@ -21,7 +24,6 @@ private:
 
 	float radius;
 	float speed;
-	float angle;
 
 	Vector2 direction;
 	Vector2 pos;
@@ -30,15 +32,9 @@ private:
 	void Draw();
 	void Move();
 
-	float computeStartingAngle(bool goRight);
-	void computeDirectionVector();
+	Vector2 computeStartingDirection(bool goRight);
 	void collideWithWall();
 	bool checkCollisionWall();
 	void collideWithPaddle(Paddle& paddle);
 	bool checkCollisionPaddle(Paddle& paddle);
-
-	void reflectAngleHorizontal();
-	void reflectAngleVertical();
-	float computeNormalAngle(float originalAngle);
-	int getAngleQuadrant();
 };
