@@ -2,11 +2,12 @@
 
 const float Paddle::DEFAULT_SPEED = 10.0f;
 
-Paddle::Paddle(Vector2& dimensions, Vector2& pos, Color fillColor) :
+Paddle::Paddle(Vector2 dimensions, Vector2 pos, Color fillColor) :
 	dimensions(dimensions),
 	pos(pos),
 	fillColor(fillColor) {
 	speed = DEFAULT_SPEED;
+	rect = Rectangle{ pos.x, pos.y, dimensions.x, dimensions.y };
 };
 
 float Paddle::GetHeight() {
@@ -17,11 +18,15 @@ float Paddle::GetWidth() {
 	return pos.y;
 }
 
+const Rectangle& Paddle::GetRect() {
+	return rect;
+}
+
 const Vector2& Paddle::GetPos() {
 	return pos;
 }
 
-void Paddle::SetPos(Vector2& newPos) {
+void Paddle::SetPos(const Vector2& newPos) {
 	pos = newPos;
 }
 

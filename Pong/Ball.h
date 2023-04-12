@@ -2,25 +2,34 @@
 #include "common.h"
 #include "raylib.h"
 #include "Drawable.h"
+#include "Paddle.h"
 
-class Ball {
+class Ball : public Drawable {
 private:
 	static const float DEFAULT_SPEED;
 	float radius;
 	float speed;
+	float angle;
 
-	Vector2& direction;
-	Vector2& pos;
+	Vector2 direction;
+	Vector2 pos;
 	
-	color fillColor;
-public:
-	Ball(float radius, Vector2& pos, Color fillColor);
+	Color fillColor;
 
+	float ComputeStartingAngle(bool goRight);
+	void ComputeDirectionVector();
+
+public:
+	Ball(float radius, Color fillColor);
+	void Init();
 	void Draw();
+	void Move();
+	void Reset();
 
 	void CollideWithPaddle(Paddle& paddle);
 	bool CollideWithWallBottom();
 	bool CollideWithWallTop();
 
-	void Move();
+	bool isCollidingWithPaddle(Paddle& paddle);
+
 };

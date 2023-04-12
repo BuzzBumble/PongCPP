@@ -7,21 +7,25 @@ class Paddle : public Drawable {
 private:
 	static const float DEFAULT_SPEED;
 
-	Vector2& pos;
-	Vector2& dimensions;
+	Vector2 pos;
+	Vector2 dimensions;
+
+	Rectangle rect;
 
 	Color fillColor;
 
 	float speed;
 
 public:
-	Paddle(Vector2& dimensions, Vector2& pos, Color fillColor);
+	Paddle(Vector2 dimensions, Vector2 pos, Color fillColor);
 
 	float GetHeight();
 	float GetWidth();
 
+	const Rectangle& GetRect();
+
 	const Vector2& GetPos();
-	void SetPos(Vector2& newPos);
+	void SetPos(const Vector2& newPos);
 
 	const Color& GetFillColor();
 
