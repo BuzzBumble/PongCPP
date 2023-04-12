@@ -9,35 +9,35 @@ int main(void)
 {
 	// Initialization
 	//--------------------------------------------------------------------------------------
-	const int SCREEN_WIDTH = 800;
-	const int SCREEN_HEIGHT = 450;
 
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Pong");
+
+	SetTargetFPS(60);
+
+	Vector2 paddleSize{ 15, 100 };
+	Vector2 paddlePos{ 50, (SCREEN_HEIGHT / 2.0) - (paddleSize.y / 2.0) };
+	Paddle p1{ paddleSize, paddlePos, WHITE, WHITE };
 
 	// Main game loop
 	while (!WindowShouldClose())    // Detect window close button or ESC key
 	{
-		// Update
-		//----------------------------------------------------------------------------------
-		// TODO: Update your variables here
-		//----------------------------------------------------------------------------------
-
-		// Draw
-		//----------------------------------------------------------------------------------
 		BeginDrawing();
-
 		ClearBackground(BLACK);
-		Vector2 size{ 50, 100 };
-		Vector2 pos{ 100, 100 };
-		Paddle p1{ size, pos, WHITE, WHITE };
 		p1.Draw();
+		p1.DrawPivot();
+		if (IsKeyDown(KEY_DOWN)) {
+			p1.MoveDown();
+		}
+
+		if (IsKeyDown(KEY_UP)) {
+			p1.MoveUp();
+		}
 
 		EndDrawing();
-		//----------------------------------------------------------------------------------
+
 	}
 
-	CloseWindow();                // Close window and OpenGL context
-	//--------------------------------------------------------------------------------------
+	CloseWindow();
 
 	return 0;
 }
