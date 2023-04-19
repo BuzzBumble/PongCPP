@@ -22,6 +22,7 @@ if (NOT raylib_FOUND)
   endif()
 endif()
 
-project ("Pong")
+project ("PongCPP")
 
 add_subdirectory ("Pong")
+add_subdirectory ("PongServer")

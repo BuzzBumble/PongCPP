@@ -11,3 +11,9 @@ CTestTestfile.cmake
 _deps
 out
 .vs
+*.vcxproj.*
+*.vcxproj
+CPackConfig.cmake
+CPackSourceConfig.cmake
+x64
+*.sln

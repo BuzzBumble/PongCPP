@@ -1,6 +1,6 @@
-﻿add_executable (Pong "Game.cpp" "Game.h" "Paddle.cpp" "Paddle.h" "Drawable.h" "common.h" "Ball.h" "Ball.cpp" "VectorHelper.cpp" "VectorHelper.h" "GameManager.h" "GameManager.cpp" "Canvas.cpp" "Canvas.h" "Pausable.h" "Pausable.cpp" "Drawable.cpp" "constants.h")
+﻿add_executable (Pong "Game.cpp" "Game.h"  "Paddle.h" "Drawable.h" "common.h" "Ball.h" "Ball.cpp" "VectorHelper.cpp" "VectorHelper.h" "GameManager.h" "GameManager.cpp" "Canvas.cpp" "Canvas.h" "Pausable.h" "Pausable.cpp" "Drawable.cpp" "constants.h")
 
-target_link_libraries(${PROJECT_NAME} raylib)
+target_link_libraries(Pong raylib)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET Pong PROPERTY CXX_STANDARD 20)
