@@ -4,6 +4,7 @@ const float Ball::DEFAULT_SPEED = 5.0f;
 const float Ball::SPEED_MULTI = 1.05f;
 const float Ball::SPEED_TRANSFER_RATIO = 0.5f;
 float Ball::DEFAULT_RADIUS = 5.0f;
+const int Ball::PADDLE_DISABLED_FRAMES = 10;
 
 Ball::Ball(float radius, Color fillColor, Paddle& p1, Paddle& p2) :
 	radius(radius),
@@ -16,7 +17,9 @@ Ball::Ball(float radius, Color fillColor, Paddle& p1, Paddle& p2) :
 };
 
 void Ball::Update() {
-	Draw();
+	if (!isHidden) {
+		Draw();
+	}
 	if (!paused) {
 		Move();
 	}
@@ -59,9 +62,9 @@ void Ball::SetSpeed(float newSpeed) {
 
 bool Ball::checkCollisionWall() {
 	float bottomY = SCREEN_HEIGHT - radius;
-	float topY = radius;
+	float topY = GAME_TOP + radius;
 
-	if (pos.y >= bottomY || pos.y <= radius) {
+	if (pos.y >= bottomY || pos.y <= topY) {
 		return true;
 	}
 
@@ -80,7 +83,7 @@ void Ball::collideWithPaddle(Paddle& paddle) {
 	Paddle::Direction paddleDir = paddle.GetDirection();
 	SetSpeed(speed * SPEED_MULTI);
 	SetDirection(VectorHelper::ReflectVertical(direction));
-	paddle.DisableCollision(10);
+	paddle.DisableCollision(PADDLE_DISABLED_FRAMES);
 }
 
 Vector2 Ball::computeStartingDirection(bool goRight) {

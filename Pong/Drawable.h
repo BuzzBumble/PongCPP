@@ -2,8 +2,12 @@
 
 class Drawable {
 public:
-	Drawable() {};
+	Drawable();
 	virtual ~Drawable() {};
 	virtual void Draw() = 0;
 	virtual void Update() = 0;
+	void Hide();
+	void Show();
+protected:
+	bool isHidden;
 };

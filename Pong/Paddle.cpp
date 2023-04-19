@@ -59,7 +59,9 @@ const Color& Paddle::GetFillColor() {
 }
 
 void Paddle::Update() {
-	Draw();
+	if (!isHidden) {
+		Draw();
+	}
 	if (!paused) {
 		updateRectangle();
 		if (!isCollidable) {
@@ -94,7 +96,7 @@ void Paddle::MoveUp() {
 		SetDirection(Direction::UP);
 	}
 	else {
-		pos.y = 0;
+		pos.y = GAME_TOP;
 		SetDirection(Direction::STILL);
 	}
 }
@@ -123,7 +125,7 @@ void Paddle::updateRectangle() {
 }
 
 bool Paddle::IsInBoundsTop() {
-	if (pos.y <= 0) {
+	if (pos.y <= GAME_TOP) {
 		return false;
 	}
 }

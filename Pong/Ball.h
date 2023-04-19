@@ -18,6 +18,7 @@ public:
 	void SetSpeed(float newSpeed);
 
 private:
+	static const int PADDLE_DISABLED_FRAMES;
 	static const float SPEED_MULTI;
 	static const float SPEED_TRANSFER_RATIO;
 

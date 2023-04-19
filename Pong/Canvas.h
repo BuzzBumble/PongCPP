@@ -8,6 +8,8 @@ class Canvas {
 private:
 	static Canvas* instancePtr;
 	static Color BACKGROUND_COLOR;
+	static const float SCORE_OFFSET_X;
+	static const float SCORE_OFFSET_Y;
 	Canvas() {};
 
 public:
@@ -20,4 +22,5 @@ public:
 
 	void Init();
 	void Clear();
+	void DrawScore(int p1Score, int p2Score);
 };
