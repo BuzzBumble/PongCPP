@@ -2,14 +2,18 @@
 #include "raylib.h"
 #include "Drawable.h"
 #include "common.h"
+#include "Pausable.h"
 
-class Paddle : public Drawable {
+class Paddle : public Drawable, public Pausable {
 public:
 	enum Direction {
 		UP,
 		DOWN,
 		STILL
 	};
+
+	static Vector2 DEFAULT_DIMENSIONS;
+	static float DEFAULT_OFFSET;
 
 	Paddle(int id, Vector2 dimensions, Vector2 pos, Color fillColor);
 

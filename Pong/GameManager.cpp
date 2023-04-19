@@ -1,25 +1,12 @@
 #include "GameManager.h"
 
-const Vector2 GameManager::PADDLE_DIMENSIONS = Vector2{ 15, 100 };
-const float GameManager::PADDLE_OFFSET = 50.0f;
-const float GameManager::BALL_RADIUS = 5.0f;
-
 GameManager::GameManager(Paddle& p1, Paddle& p2, Ball& ball) :
 	p1(p1),
 	p2(p2),
-	ball(ball) {
+	ball(ball)
+{
+	gameState = State::Paused;
 	canvas = Canvas::GetInstance();
-}
-
-GameManager* GameManager::GetInstance() {
-	if (instancePtr == NULL) {
-		float midY = (SCREEN_HEIGHT / 2.0f) - (PADDLE_DIMENSIONS.y / 2.0f);
-		Paddle paddle1 = Paddle{ 1, PADDLE_DIMENSIONS, Vector2{PADDLE_OFFSET, midY}, WHITE };
-		Paddle paddle2 = Paddle{ 2, PADDLE_DIMENSIONS, Vector2{SCREEN_WIDTH - (PADDLE_OFFSET + PADDLE_DIMENSIONS.x), midY}, WHITE };
-		Ball b = Ball{ BALL_RADIUS, RED, paddle1, paddle2 };
-		instancePtr = new GameManager(paddle1, paddle2, b);
-	}
-	return instancePtr;
 }
 
 void GameManager::Start() {
@@ -42,23 +29,44 @@ void GameManager::Run() {
 void GameManager::Update() {
 	BeginDrawing();
 	canvas->Clear();
+	if (IsKeyPressed(KEY_SPACE)) {
+		if (gameState == Paused) {
+			Unpause();
+		}
+		else {
+			Pause();
+		}
+		
+	}
+
 	p1.Update();
 	p2.Update();
 	ball.Update();
+	handleInputs();
 
+	EndDrawing();
+}
+
+void GameManager::handleInputs() {
 	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
 		ball.Reset();
 	}
-
-	EndDrawing();
 }
 
 void GameManager::Quit() {
 	CloseWindow();
 }
 
-GameManager::~GameManager() {
-	if (canvas != NULL) {
-		delete(canvas);
-	}
+void GameManager::Pause() {
+	gameState = Paused;
+	p1.Pause();
+	p2.Pause();
+	ball.Pause();
+}
+
+void GameManager::Unpause() {
+	gameState = Playing;
+	p1.Unpause();
+	p2.Unpause();
+	ball.Unpause();
 }

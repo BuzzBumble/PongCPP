@@ -6,28 +6,31 @@
 #include "Canvas.h"
 
 class GameManager {
-private:
-	static const Vector2 PADDLE_DIMENSIONS;
-	static const float PADDLE_OFFSET;
-	static const float BALL_RADIUS;
-	static GameManager* instancePtr;
-	GameManager(Paddle& p1, Paddle& p2, Ball& ball);
-	GameManager() = delete;
-	~GameManager();
-
-	Paddle& p1;
-	Paddle& p2;
-	Ball& ball;
-	Canvas* canvas;
-
 public:
-	GameManager(const GameManager& gameMgrObj) = delete;
+	enum State {
+		BeforeStart,
+		Playing,
+		Paused,
+		GameOver
+	};
 
-	static GameManager* GetInstance();
-
+	GameManager(Paddle& p1, Paddle& p2, Ball& ball);
 	void Start();
 	void Init();
 	void Run();
 	void Update();
 	void Quit();
+	void Pause();
+	void Unpause();
+
+private:
+	GameManager() = delete;
+
+	Paddle& p1;
+	Paddle& p2;
+	Ball& ball;
+	Canvas* canvas;
+	State gameState;
+
+	void handleInputs();
 };

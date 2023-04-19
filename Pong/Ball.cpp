@@ -3,6 +3,7 @@
 const float Ball::DEFAULT_SPEED = 5.0f;
 const float Ball::SPEED_MULTI = 1.05f;
 const float Ball::SPEED_TRANSFER_RATIO = 0.5f;
+float Ball::DEFAULT_RADIUS = 5.0f;
 
 Ball::Ball(float radius, Color fillColor, Paddle& p1, Paddle& p2) :
 	radius(radius),
@@ -16,7 +17,9 @@ Ball::Ball(float radius, Color fillColor, Paddle& p1, Paddle& p2) :
 
 void Ball::Update() {
 	Draw();
-	Move();
+	if (!paused) {
+		Move();
+	}
 }
 
 void Ball::Init() {

@@ -4,9 +4,12 @@
 #include "VectorHelper.h"
 #include "Drawable.h"
 #include "Paddle.h"
+#include "Pausable.h"
 
-class Ball : public Drawable {
+class Ball : public Drawable, public Pausable {
 public:
+	static float DEFAULT_RADIUS;
+	static const float DEFAULT_SPEED;
 	Ball(float radius, Color fillColor, Paddle& p1, Paddle& p2);
 	void Init();
 	void Reset();
@@ -15,7 +18,6 @@ public:
 	void SetSpeed(float newSpeed);
 
 private:
-	static const float DEFAULT_SPEED;
 	static const float SPEED_MULTI;
 	static const float SPEED_TRANSFER_RATIO;
 

@@ -2,6 +2,8 @@
 
 const float Paddle::DEFAULT_SPEED = 10.0f;
 const float Paddle::TARGET_FRAME_TIME = 1.0f / GLOBAL_FRAME_RATE;
+Vector2 Paddle::DEFAULT_DIMENSIONS = Vector2{ 15, 100 };
+float Paddle::DEFAULT_OFFSET = 50.0f;
 
 Paddle::Paddle(int id, Vector2 dimensions, Vector2 pos, Color fillColor) :
 	id(id),
@@ -58,16 +60,20 @@ const Color& Paddle::GetFillColor() {
 
 void Paddle::Update() {
 	Draw();
-	updateRectangle();
-	if (!isCollidable) {
-		tickDisabledCollision();
-	}
-	if (IsKeyDown(KEY_DOWN)) {
-		MoveDown();
-	} else if (IsKeyDown(KEY_UP)) {
-		MoveUp();
-	} else {
-		SetDirection(Direction::STILL);
+	if (!paused) {
+		updateRectangle();
+		if (!isCollidable) {
+			tickDisabledCollision();
+		}
+		if (IsKeyDown(KEY_DOWN)) {
+			MoveDown();
+		}
+		else if (IsKeyDown(KEY_UP)) {
+			MoveUp();
+		}
+		else {
+			SetDirection(Direction::STILL);
+		}
 	}
 }
 

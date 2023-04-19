@@ -7,8 +7,14 @@ using namespace std;
 
 int main(void)
 {
-	GameManager* gameManager = GameManager::GetInstance();
-	gameManager->Start();
+
+	float midY = (SCREEN_HEIGHT / 2.0f) - (Paddle::DEFAULT_DIMENSIONS.y / 2.0f);
+	Paddle p1 = Paddle{ 1, Paddle::DEFAULT_DIMENSIONS, Vector2{Paddle::DEFAULT_OFFSET, midY}, WHITE };
+	Paddle p2 = Paddle{ 2, Paddle::DEFAULT_DIMENSIONS, Vector2{SCREEN_WIDTH - (Paddle::DEFAULT_OFFSET + Paddle::DEFAULT_DIMENSIONS.x), midY}, WHITE };
+	Ball ball = Ball{ Ball::DEFAULT_RADIUS, RED, p1, p2 };
+
+	GameManager gameManager = GameManager{ p1, p2, ball };
+	gameManager.Start();
 
 	return 0;
 }

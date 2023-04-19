@@ -1,6 +1,7 @@
 #include "Canvas.h"
 
 Color Canvas::BACKGROUND_COLOR = BLACK;
+Canvas* Canvas::instancePtr = NULL;
 
 Canvas* Canvas::GetInstance() {
 	if (instancePtr == NULL) {
