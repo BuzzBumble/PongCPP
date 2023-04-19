@@ -26,3 +26,4 @@ project ("PongCPP")
 
 add_subdirectory ("Pong")
 add_subdirectory ("PongServer")
+add_subdirectory ("PongClient")

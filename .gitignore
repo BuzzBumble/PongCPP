@@ -17,3 +17,4 @@ CPackConfig.cmake
 CPackSourceConfig.cmake
 x64
 *.sln
+**/**/Debug

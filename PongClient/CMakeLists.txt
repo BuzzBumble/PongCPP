@@ -1,0 +1,6 @@
+set(Boost_INCLUDE_DIR "C:/Users/Idiot/source/SDKs/boost_1_82_0")
+find_package(Boost 1.82.0)
+if(Boost_FOUND)
+	include_directories(${Boost_INCLUDE_DIRS})
+	add_executable (PongClient "Client.cpp" "Client.h")
+endif()
