@@ -1,7 +1,7 @@
 #include "Ball.h"
 
 const float Ball::DEFAULT_SPEED = 5.0f;
-const float Ball::SPEED_MULTI = 1.2f;
+const float Ball::SPEED_MULTI = 1.05f;
 const float Ball::SPEED_TRANSFER_RATIO = 0.5f;
 
 Ball::Ball(float radius, Color fillColor, Paddle& p1, Paddle& p2) :
@@ -69,7 +69,7 @@ void Ball::collideWithWall() {
 	SetDirection(VectorHelper::ReflectHorizontal(direction));
 }
 
-bool Ball::checkCollisionPaddle(Paddle& paddle) {
+bool Ball::checkCollisionPaddle(const Paddle& paddle) {
 	return CheckCollisionCircleRec(pos, radius + 2.0f, paddle.GetRect()) && paddle.IsCollidable();
 }
 

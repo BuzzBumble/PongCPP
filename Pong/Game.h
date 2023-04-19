@@ -4,9 +4,6 @@
 #pragma once
 
 #include <iostream>
-#include "raylib.h"
-#include "common.h"
-#include "Paddle.h"
-#include "Ball.h"
+#include "GameManager.h"
 
 // TODO: Reference additional headers your program requires here.

@@ -36,5 +36,5 @@ private:
 	void collideWithWall();
 	bool checkCollisionWall();
 	void collideWithPaddle(Paddle& paddle);
-	bool checkCollisionPaddle(Paddle& paddle);
+	bool checkCollisionPaddle(const Paddle& paddle);
 };

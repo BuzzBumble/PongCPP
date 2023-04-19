@@ -3,7 +3,6 @@
 #include "Drawable.h"
 #include "common.h"
 
-
 class Paddle : public Drawable {
 public:
 	enum Direction {
@@ -12,19 +11,19 @@ public:
 		STILL
 	};
 
-	Paddle(Vector2 dimensions, Vector2 pos, Color fillColor);
+	Paddle(int id, Vector2 dimensions, Vector2 pos, Color fillColor);
 
 	void Update();
 
-	float GetHeight();
-	float GetWidth();
+	float GetHeight() const;
+	float GetWidth() const;
 
-	const Rectangle& GetRect();
+	const Rectangle& GetRect() const;
 
-	const Vector2& GetPos();
+	const Vector2& GetPos() const;
 	void SetPos(const Vector2& newPos);
 
-	const Direction GetDirection();
+	Direction GetDirection() const;
 	void SetDirection(Direction dir);
 
 	const Color& GetFillColor();
@@ -42,12 +41,18 @@ public:
 	float frameCounter;
 	void DisableCollision(int frames);
 
-	bool IsCollidable();
+	bool IsCollidable() const;
 
 private:
 	static const float DEFAULT_SPEED;
 
 	static const float TARGET_FRAME_TIME;
+
+	float topBottomPadding;
+	float leftRightPadding;
+	float sideSectionSize;
+
+	int id;
 
 	Vector2 pos;
 	Vector2 dimensions;
