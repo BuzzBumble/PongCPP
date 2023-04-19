@@ -86,6 +86,19 @@ void Ball::collideWithPaddle(Paddle& paddle) {
 	paddle.DisableCollision(PADDLE_DISABLED_FRAMES);
 }
 
+// Return 0 when not out of bounds
+// 1 if out of bounds on the left
+// 2 if out of bounds on the right
+int Ball::IsOutOfBounds() {
+	if (pos.x < 0) {
+		return 1;
+	}
+	if (pos.x > SCREEN_WIDTH) {
+		return 2;
+	}
+	return 0;
+}
+
 Vector2 Ball::computeStartingDirection(bool goRight) {
 	float x = goRight ? 1 : -1;
 	float y = (static_cast<float>(rand()) / static_cast<float>(RAND_MAX / 2)) - 1;

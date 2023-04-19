@@ -16,6 +16,7 @@ public:
 	void Update();
 	void SetDirection(Vector2 vector);
 	void SetSpeed(float newSpeed);
+	int IsOutOfBounds();
 
 private:
 	static const int PADDLE_DISABLED_FRAMES;

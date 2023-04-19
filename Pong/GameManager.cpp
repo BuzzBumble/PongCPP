@@ -3,7 +3,9 @@
 GameManager::GameManager(Paddle& p1, Paddle& p2, Ball& ball) :
 	p1(p1),
 	p2(p2),
-	ball(ball)
+	ball(ball),
+	p1Score(0),
+	p2Score(0)
 {
 	gameState = State::Paused;
 	canvas = Canvas::GetInstance();
@@ -38,7 +40,19 @@ void GameManager::Update() {
 		}
 		
 	}
+	int ballCheck = ball.IsOutOfBounds();
+	if (ballCheck) {
+		if (ballCheck == 1) {
+			p1Score++;
+		}
+		if (ballCheck == 2) {
+			p2Score++;
+		}
+		ball.Reset();
+		Pause();
+	}
 
+	canvas->DrawScore(p1Score, p2Score);
 	p1.Update();
 	p2.Update();
 	ball.Update();

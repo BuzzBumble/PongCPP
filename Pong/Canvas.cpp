@@ -23,5 +23,13 @@ void Canvas::Clear() {
 }
 
 void Canvas::DrawScore(int p1Score, int p2Score) {
-	
+	DrawScoreBackground();
+	std::string p1Str = std::to_string(p1Score);
+	std::string p2Str = std::to_string(p2Score);
+	DrawText(p1Str.c_str(), 50, 50, 24, WHITE);
+	DrawText(p2Str.c_str(), SCREEN_WIDTH - 50, 50, 24, WHITE);
+}
+
+void Canvas::DrawScoreBackground() {
+	DrawRectangle(0, 0, SCREEN_WIDTH, GAME_TOP, GRAY);
 }

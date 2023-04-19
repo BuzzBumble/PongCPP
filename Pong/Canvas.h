@@ -11,6 +11,8 @@ private:
 	static const float SCORE_OFFSET_X;
 	static const float SCORE_OFFSET_Y;
 	Canvas() {};
+	
+	void DrawScoreBackground();
 
 public:
 	Canvas(const Canvas& canvasObj) = delete;

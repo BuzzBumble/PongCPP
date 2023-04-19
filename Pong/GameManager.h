@@ -26,6 +26,8 @@ public:
 private:
 	GameManager() = delete;
 
+	int p1Score;
+	int p2Score;
 	Paddle& p1;
 	Paddle& p2;
 	Ball& ball;
