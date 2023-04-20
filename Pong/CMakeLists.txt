@@ -1,4 +1,14 @@
-﻿add_executable (Pong "Game.cpp" "Game.h"  "Paddle.h" "Drawable.h" "common.h" "Ball.h" "Ball.cpp" "VectorHelper.cpp" "VectorHelper.h" "GameManager.h" "GameManager.cpp" "Canvas.cpp" "Canvas.h" "Pausable.h" "Pausable.cpp" "Drawable.cpp" "constants.h")
+﻿add_executable (Pong 
+"Game.h" "Game.cpp"  
+"Paddle.h" "Paddle.cpp"
+"common.h" 
+"Ball.h" "Ball.cpp" 
+"VectorHelper.h"  "VectorHelper.cpp"
+"GameManager.h" "GameManager.cpp" 
+"Canvas.h" "Canvas.cpp" 
+"Pausable.h" "Pausable.cpp" 
+ "Drawable.h" "Drawable.cpp" 
+"constants.h")
 
 target_link_libraries(Pong raylib)
 

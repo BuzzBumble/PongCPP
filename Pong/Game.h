@@ -1,9 +1,6 @@
-﻿// Game.h : Include file for standard system include files,
-// or project specific include files.
-
-#pragma once
+﻿#pragma once
 
 #include <iostream>
 #include "GameManager.h"
-
-// TODO: Reference additional headers your program requires here.
+#include "Paddle.h"
+#include "Ball.h"

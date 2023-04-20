@@ -10,11 +10,11 @@ int main() {
 
 	udp::resolver resolver(io_context);
 	udp::endpoint receiver_endpoint =
-		*resolver.resolve(udp::v4(), "127.0.0.1:13", "daytime").begin();
+		*resolver.resolve(udp::v4(), "127.0.0.1", "daytime").begin();
 
 	udp::socket socket(io_context);
 	socket.open(udp::v4());
-	boost::array<char, 1> send_buf = { {0} };
+	boost::array<char, 1> send_buf = { {'g'}};
 	socket.send_to(asio::buffer(send_buf), receiver_endpoint);
 
 	boost::array<char, 128> recv_buf;
@@ -22,5 +22,8 @@ int main() {
 	size_t len = socket.receive_from(
 		asio::buffer(recv_buf), sender_endpoint);
 	std::cout.write(recv_buf.data(), len);
+
+	std::string blah;
+	std::getline(std::cin, blah);
 	return 0;
 }

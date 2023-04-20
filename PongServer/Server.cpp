@@ -13,6 +13,8 @@ int main() {
 		boost::array<char, 1> recv_buf;
 		udp::endpoint remote_endpoint;
 		socket.receive_from(asio::buffer(recv_buf), remote_endpoint);
+		std::string data(recv_buf.begin(), recv_buf.end());
+		std::cout << data << std::endl;
 		std::string message = "Hello from the server";
 		socket.send_to(asio::buffer(message), remote_endpoint, 0);
 	}
