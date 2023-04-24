@@ -1,22 +1,25 @@
-#include <iostream>
-#include <boost/array.hpp>
-#include <boost/asio.hpp>
+#include "Server.h"
 
-using namespace boost;
-using namespace boost::asio::ip;
-
-int main() {
-	asio::io_context io_context;
-	udp::socket socket(io_context, udp::endpoint(udp::v4(), 13));
-
-	for (;;) {
-		boost::array<char, 1> recv_buf;
-		udp::endpoint remote_endpoint;
-		socket.receive_from(asio::buffer(recv_buf), remote_endpoint);
-		std::string data(recv_buf.begin(), recv_buf.end());
-		std::cout << data << std::endl;
-		std::string message = "Hello from the server";
-		socket.send_to(asio::buffer(message), remote_endpoint, 0);
+int Server::FindFreeClientIndex() const {
+	for (int i = 0; i < maxClients; ++i) {
+		if (!clientConnected[i])
+			return i;
 	}
-	return 0;
+	return -1;
+}
+
+int Server::FindExistingClientIndex(const ip::address_v4& address) const {
+	for (int i = 0; i < MaxClients; ++i) {
+		if (clientConnected[i] && clientAddress[i] == address)
+			return i;
+	}
+	return -1;
+}
+
+bool Server::IsClientConnected(int clientIndex) const {
+	return clientConnected[clientIndex];
+}
+
+const ip::address_v4& Server::GetClientAddress(int clientIndex) const {
+	return clientAddress[clientIndex];
 }

@@ -50,6 +50,7 @@ void Ball::Move() {
 void Ball::Reset() {
 	pos.x = SCREEN_WIDTH / 2.0f;
 	pos.y = SCREEN_HEIGHT / 2.0f;
+	speed = DEFAULT_SPEED;
 }
 
 void Ball::SetDirection(Vector2 vector) {
