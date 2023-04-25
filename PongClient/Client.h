@@ -1,11 +1,17 @@
+#pragma once
 #include <boost/asio.hpp>
 #include <boost/array.hpp>
+#include <iostream>
 
 using namespace boost;
 using namespace boost::asio::ip;
 
 class Client {
 public:
+	enum MessageType {
+		Connection,
+	};
+
 	enum State {
 		Disconnected,
 		Connecting,
@@ -13,6 +19,10 @@ public:
 	};
 	
 	Client(boost::asio::io_context& io_context);
+	void ResolveReceiverEndpoint();
+	void SendToServer(MessageType msgType, array<char, 3> sendBuf);
+	void AttemptConnection();
+	size_t WaitForMessage(boost::asio::mutable_buffer buf);
 
 private:
 	State connectionState;
@@ -20,8 +30,5 @@ private:
 	udp::socket& socket;
 	udp::endpoint receiverEndpoint;
 	udp::endpoint senderEndpoint;
-	array<char, 64> sendBuf;
-	array<char, 64> recvBuf;
 
-	void ResolveReceiverEndpoint();
 };

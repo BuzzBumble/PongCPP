@@ -1,29 +1,18 @@
 #include <iostream>
-#include <boost/array.hpp>
-#include <boost/asio.hpp>
-
-using namespace boost;
-using namespace boost::asio::ip;
+#include "GameManager.h"
+#include "Paddle.h"
+#include "Ball.h"
 
 int main() {
-	asio::io_context io_context;
+	
+	float gameHeight = SCREEN_HEIGHT - GAME_TOP;
+	float midY = (gameHeight / 2.0f) - (Paddle::DEFAULT_DIMENSIONS.y / 2.0f) + GAME_TOP;
+	Paddle p1 = Paddle{ 1, Paddle::DEFAULT_DIMENSIONS, Vector2{Paddle::DEFAULT_OFFSET, midY}, WHITE };
+	Paddle p2 = Paddle{ 2, Paddle::DEFAULT_DIMENSIONS, Vector2{SCREEN_WIDTH - (Paddle::DEFAULT_OFFSET + Paddle::DEFAULT_DIMENSIONS.x), midY}, WHITE };
+	Ball ball = Ball{ Ball::DEFAULT_RADIUS, RED, p1, p2 };
 
-	udp::resolver resolver(io_context);
-	udp::endpoint receiver_endpoint =
-		*resolver.resolve(udp::v4(), "127.0.0.1", "daytime").begin();
-
-	udp::socket socket(io_context);
-	socket.open(udp::v4());
-	boost::array<char, 1> send_buf = { {'g'} };
-	socket.send_to(asio::buffer(send_buf), receiver_endpoint);
-
-	boost::array<char, 128> recv_buf;
-	udp::endpoint sender_endpoint;
-	size_t len = socket.receive_from(
-		asio::buffer(recv_buf), sender_endpoint);
-	std::cout.write(recv_buf.data(), len);
-
-	std::string blah;
-	std::getline(std::cin, blah);
+	GameManager gameManager = GameManager{ p1, p2, ball };
+	gameManager.Start();
+	
 	return 0;
 }
