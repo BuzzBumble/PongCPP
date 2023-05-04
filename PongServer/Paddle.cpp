@@ -67,12 +67,6 @@ void Paddle::Update() {
 		if (!isCollidable) {
 			tickDisabledCollision();
 		}
-		if (IsKeyDown(KEY_DOWN)) {
-			MoveDown();
-		}
-		else if (IsKeyDown(KEY_UP)) {
-			MoveUp();
-		}
 		else {
 			SetDirection(Direction::STILL);
 		}
