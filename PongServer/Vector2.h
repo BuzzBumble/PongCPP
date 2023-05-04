@@ -6,9 +6,9 @@ public:
 	float x;
 	float y;
 
-	Vector2 ReflectVertical(const Vector2& vector);
-	Vector2 ReflectHorizontal(const Vector2& vector);
+	Vector2 ReflectVertical();
+	Vector2 ReflectHorizontal();
 
-	Vector2 Normalize(const Vector2& vector);
-	Vector2 Subtract(const Vector2& v2, const Vector2& v1);
+	Vector2 Normalize();
+	Vector2 Subtract(const Vector2& v1);
 };

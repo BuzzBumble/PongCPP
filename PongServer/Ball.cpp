@@ -73,7 +73,7 @@ bool Ball::checkCollisionWall() {
 }
 
 void Ball::collideWithWall() {
-	SetDirection(VectorHelper::ReflectHorizontal(direction));
+	SetDirection(direction.ReflectHorizontal());
 }
 
 bool Ball::checkCollisionPaddle(const Paddle& paddle) {
@@ -83,7 +83,7 @@ bool Ball::checkCollisionPaddle(const Paddle& paddle) {
 void Ball::collideWithPaddle(Paddle& paddle) {
 	Paddle::Direction paddleDir = paddle.GetDirection();
 	SetSpeed(speed * SPEED_MULTI);
-	SetDirection(VectorHelper::ReflectVertical(direction));
+	SetDirection(direction.ReflectVertical());
 	paddle.DisableCollision(PADDLE_DISABLED_FRAMES);
 }
 
@@ -104,5 +104,5 @@ Vector2 Ball::computeStartingDirection(bool goRight) {
 	float x = goRight ? 1 : -1;
 	float y = (static_cast<float>(rand()) / static_cast<float>(RAND_MAX / 2)) - 1;
 	
-	return VectorHelper::Normalize(Vector2{ x, y });
+	return Vector2{x, y}.Normalize();
 }
