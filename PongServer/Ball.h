@@ -1,6 +1,5 @@
 #pragma once
 #include "common.h"
-#include "raylib.h"
 #include "VectorHelper.h"
 #include "Drawable.h"
 #include "Paddle.h"

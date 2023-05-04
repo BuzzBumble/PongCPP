@@ -1,5 +1,4 @@
 #pragma once
-#include "raylib.h"
 #include "common.h"
 #include "Paddle.h"
 #include "Ball.h"
