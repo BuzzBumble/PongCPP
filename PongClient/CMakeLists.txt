@@ -1,7 +1,5 @@
 set (CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/SFML/cmake-modules/")
-find_package (SFML 2.5.1 COMPONENTS system window graphics network audio REQUIRED)
 find_package(Boost 1.82.0)
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 if(Boost_FOUND)
 	include_directories(${Boost_INCLUDE_DIRS})
 	add_executable (PongClient "main.cpp" "Client.cpp" "Client.h" "Ball.cpp" "Ball.h" "Canvas.cpp" "Canvas.h" "common.h" "constants.h" "Drawable.cpp" "Drawable.h" "GameManager.cpp" "GameManager.h" "Paddle.cpp" "Paddle.h" "Pausable.cpp" "Pausable.h" "VectorHelper.cpp" "VectorHelper.h"  )

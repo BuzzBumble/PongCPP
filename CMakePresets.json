@@ -10,8 +10,7 @@
             "cacheVariables": {
                 "CMAKE_C_COMPILER": "cl.exe",
                 "CMAKE_CXX_COMPILER": "cl.exe",
-                "Boost_INCLUDE_DIR": "C:/Users/Idiot/source/SDKs/boost_1_82_0",
-                "SFML_ROOT": "C:/Users/Idiot/source/SDKs/sfml-build"
+                "Boost_INCLUDE_DIR": "C:/Users/Idiot/source/SDKs/boost_1_82_0"
             },
             "condition": {
                 "type": "equals",
