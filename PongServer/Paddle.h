@@ -2,6 +2,7 @@
 #include "Drawable.h"
 #include "common.h"
 #include "Pausable.h"
+#include "Vector2.h"
 
 class Paddle : public Drawable, public Pausable {
 public:
