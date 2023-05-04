@@ -23,14 +23,14 @@ void Client::AttemptConnection() {
 	std::cout << buf.data() << std::endl;
 }
 
-void Client::SendToServer(MessageType msgType, array<char, 3> data) {
+size_t Client::SendToServer(MessageType msgType, array<char, 3> data) {
 	array<char, 4> sendBuf;
 	sendBuf[0] = msgType;
 	for (int i = 0; i < data.size(); ++i) {
 		sendBuf[i + 1] = data[i];
 	}
 
-	socket.send_to(asio::buffer(sendBuf), receiverEndpoint);
+	return socket.send_to(asio::buffer(sendBuf), receiverEndpoint);
 }
 
 size_t Client::WaitForMessage(boost::asio::mutable_buffer buf) {

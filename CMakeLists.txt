@@ -25,5 +25,6 @@ endif()
 project ("PongCPP")
 
 add_subdirectory ("Pong")
+add_subdirectory ("net_common")
 add_subdirectory ("PongServer")
 add_subdirectory ("PongClient")

@@ -1,5 +1,6 @@
 #include <boost/asio.hpp>
 #include "constants.h"
+#include "net_common/common.h"
 
 using namespace boost::asio;
 

@@ -50,10 +50,6 @@ Paddle::Direction Paddle::GetDirection() const {
 	return direction;
 }
 
-void Paddle::Draw() {
-	DrawRectangleV(pos, dimensions, fillColor);
-}
-
 const Color& Paddle::GetFillColor() {
 	return fillColor;
 }
@@ -128,8 +124,4 @@ bool Paddle::IsInBoundsBottom() {
 	if (pos.y + dimensions.y >= SCREEN_HEIGHT) {
 		return false;
 	}
-}
-
-void Paddle::DrawPivot() {
-	DrawCircleV(pos, 3.0f, RED);
 }

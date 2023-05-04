@@ -20,7 +20,7 @@ public:
 	
 	Client(boost::asio::io_context& io_context);
 	void ResolveReceiverEndpoint();
-	void SendToServer(MessageType msgType, array<char, 3> sendBuf);
+	size_t SendToServer(MessageType msgType, array<char, 3> sendBuf);
 	void AttemptConnection();
 	size_t WaitForMessage(boost::asio::mutable_buffer buf);
 
