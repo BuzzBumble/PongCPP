@@ -8,7 +8,29 @@ namespace net {
 	Packet::Packet() :
 		protocol_id(0),
 		packet_type(0),
-		data(std::vector<uint8_t>{}) {};
+		data(std::vector<uint8_t>{}) {
+	};
+
+	Packet::Packet(uint8_t protocolId, uint8_t packetType) :
+		protocol_id(protocolId),
+		packet_type(packetType),
+		data(std::vector<uint8_t>{}) {
+	}
+
+	uint8_t Packet::GetProtocolId() {
+		return protocol_id;
+	}
+	uint8_t Packet::GetPacketType() {
+		return packet_type;
+	}
+
+	std::vector<uint8_t> Packet::GetData() {
+		return data;
+	}
+
+	size_t Packet::GetTotalSize() {
+		return data.size() + 3;
+	}
 
 	void Packet::SetProtocolId(uint8_t id) {
 		protocol_id = id;

@@ -8,12 +8,13 @@ using namespace boost::asio::ip;
 
 int main() {
 	try {
+		std::string ipString = "127.0.0.1";
+		std::string portString = "13";
 		asio::io_context io_context;
-		net::Agent agent(io_context);
 
-		net::Packet packet{};
-		packet.SetProtocolId(net::Packet::DEFAULT_PROTO_ID);
-		packet.SetPacketType(net::Packet::TYPE_CONNREQ);
+		net::Agent agent(io_context, ipString, portString);
+
+		net::Packet packet{ net::Packet::DEFAULT_PROTO_ID, net::Packet::TYPE_CONNREQ };
 
 		std::vector<uint8_t> testVector = { 1, 2, 3, 4 };
 		packet.SetData(testVector);
@@ -26,8 +27,18 @@ int main() {
 			}
 
 			size_t sent = agent.SendPacket(packet);
+			std::cout << "Sent " << sent << " bytes." << std::endl;
+			net::Packet p = agent.ReceivePacket();
 
-			std::cout << sent << std::endl;
+			std::cout << "Received " << p.GetTotalSize() << " bytes: ";
+
+			std::vector<uint8_t> packetVector = p.BuildPacketVector();
+
+			for (auto i : packetVector) {
+				std::cout << static_cast<int>(i) << " ";
+			}
+			std::cout << std::endl;
+
 		}
 	}
 	catch (std::exception& e) {
