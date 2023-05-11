@@ -1,38 +1,55 @@
 #include "agent.h"
 
 namespace net {
-	Agent::Agent(asio::io_context& io_context, std::string serverIp, std::string serverPort) :
+	Agent::Agent(asio::io_context& io_context, std::string receiverIp, std::string receiverPort) :
 		io_context(io_context),
 		socket(asio::ip::udp::socket(io_context)),
-		serverIpString(serverIp),
-		serverPortString(serverPort)
+		receiverIpString(receiverIp),
+		receiverPortString(receiverPort)
 	{
 		socket.open(asio::ip::udp::v4());
-		ResolveEndpoint(serverIpString, serverPortString);
+		ResolveEndpoint(receiverIpString, receiverPortString);
 	};
 
-	void Agent::SetServerEndpoint(std::string ipString, std::string portString) {
-		serverIpString = ipString;
-		serverPortString = portString;
+	Agent::Agent(asio::io_context& io_context) :
+		io_context(io_context),
+		socket(asio::ip::udp::socket(io_context, asio::ip::udp::endpoint(asio::ip::udp::v4(), 13))) {
+	};
 
-		ResolveEndpoint(serverIpString, serverPortString);
+	void Agent::SetReceiverEndpoint(std::string ipString, std::string portString) {
+		receiverIpString = ipString;
+		receiverPortString = portString;
+
+		ResolveEndpoint(receiverIpString, receiverPortString);
+	}
+
+	const asio::ip::udp::endpoint Agent::GetReceiverEndpoint() const {
+		return receiverEndpoint;
 	}
 
 	void Agent::ResolveEndpoint(std::string ipString, std::string portString) {
 		asio::ip::udp::resolver resolver(io_context);
 
-		serverEndpoint = *resolver.resolve(asio::ip::udp::v4(), ipString, portString).begin();
+		receiverEndpoint = *resolver.resolve(asio::ip::udp::v4(), ipString, portString).begin();
 	}
 
 	size_t Agent::SendPacket(Packet& p) {
-		return socket.send_to(asio::buffer(p.BuildPacketVector()), serverEndpoint);
+		return SendPacketTo(p, receiverEndpoint);
+	}
+
+	size_t Agent::SendPacketTo(Packet& p, asio::ip::udp::endpoint endpoint) {
+		return socket.send_to(asio::buffer(p.BuildPacketVector()), endpoint);
 	}
 
 	Packet Agent::ReceivePacket() {
+		return ReceivePacketFrom(receiverEndpoint);
+	}
+
+	Packet Agent::ReceivePacketFrom(asio::ip::udp::endpoint& endpoint) {
 		PACKET_BUF recv_buf;
-		size_t len = socket.receive_from(asio::buffer(recv_buf), serverEndpoint);
+		size_t len = socket.receive_from(asio::buffer(recv_buf), endpoint);
 		Packet packet{ recv_buf[0], recv_buf[1] };
-		
+
 		std::vector<uint8_t> dataVector;
 
 		for (int i = 0; i < recv_buf[2]; ++i) {

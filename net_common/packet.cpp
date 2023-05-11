@@ -3,7 +3,8 @@
 namespace net {
 	const uint8_t Packet::DEFAULT_PROTO_ID = 4;
 	const uint8_t Packet::TYPE_CONNREQ = 1;
-	const uint8_t Packet::TYPE_CONNRES = 2;
+	const uint8_t Packet::TYPE_CONNACCEPT = 2;
+	const uint8_t Packet::TYPE_CONNREJECT = 3;
 
 	Packet::Packet() :
 		protocol_id(0),

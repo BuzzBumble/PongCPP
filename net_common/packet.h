@@ -8,7 +8,8 @@ namespace net {
 	public:
 		static const uint8_t DEFAULT_PROTO_ID;
 		static const uint8_t TYPE_CONNREQ;
-		static const uint8_t TYPE_CONNRES;
+		static const uint8_t TYPE_CONNACCEPT;
+		static const uint8_t TYPE_CONNREJECT;
 
 		Packet();
 		Packet(uint8_t protocolId, uint8_t packetType);

@@ -2,6 +2,7 @@
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include "net_common/common.h"
+#include "Client.h"
 
 using namespace boost;
 using namespace boost::asio::ip;
@@ -14,10 +15,7 @@ int main() {
 
 		net::Agent agent(io_context, ipString, portString);
 
-		net::Packet packet{ net::Packet::DEFAULT_PROTO_ID, net::Packet::TYPE_CONNREQ };
-
-		std::vector<uint8_t> testVector = { 1, 2, 3, 4 };
-		packet.SetData(testVector);
+		Client c{ agent };
 
 		for (;;) {
 			std::string s;
@@ -26,9 +24,9 @@ int main() {
 				break;
 			}
 
-			size_t sent = agent.SendPacket(packet);
+			size_t sent = c.AttemptConnection();
 			std::cout << "Sent " << sent << " bytes." << std::endl;
-			net::Packet p = agent.ReceivePacket();
+			net::Packet p = c.ReceiveMessage();
 
 			std::cout << "Received " << p.GetTotalSize() << " bytes: ";
 
@@ -46,7 +44,6 @@ int main() {
 		std::string s;
 		std::getline(std::cin, s);
 	}
-	
 	
 	return 0;
 }
