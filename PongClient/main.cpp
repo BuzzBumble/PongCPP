@@ -1,28 +1,41 @@
 #include <iostream>
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
+#include "net_common/common.h"
 
 using namespace boost;
 using namespace boost::asio::ip;
 
 int main() {
+	try {
+		asio::io_context io_context;
+		net::Agent agent(io_context);
 
-	asio::io_context io_context;
-	udp::resolver resolver(io_context);
-	udp::endpoint endpoint = *resolver.resolve(udp::v4(), "127.0.0.1", "pong").begin();
+		net::Packet packet{};
+		packet.SetProtocolId(net::Packet::DEFAULT_PROTO_ID);
+		packet.SetPacketType(net::Packet::TYPE_CONNREQ);
 
-	udp::socket socket(io_context);
-	socket.open(udp::v4());
+		std::vector<uint8_t> testVector = { 1, 2, 3, 4 };
+		packet.SetData(testVector);
 
-	std::vector<uint8_t> testVector{ 1, 2, 3, 4 };
-	boost::array<uint8_t, 4> testArray{ 1, 2, 3, 4 };
+		for (;;) {
+			std::string s;
+			std::getline(std::cin, s);
+			if (s == "stop") {
+				break;
+			}
 
-	size_t sent = socket.send_to(asio::buffer(testArray), endpoint);
+			size_t sent = agent.SendPacket(packet);
 
-	std::cout << sent << std::endl;
-
-	std::string s;
-	std::getline(std::cin, s);
+			std::cout << sent << std::endl;
+		}
+	}
+	catch (std::exception& e) {
+		std::cerr << e.what() << std::endl;
+		std::string s;
+		std::getline(std::cin, s);
+	}
+	
 	
 	return 0;
 }

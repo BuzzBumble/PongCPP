@@ -5,13 +5,13 @@ namespace net {
 		io_context(io_context),
 		socket(asio::ip::udp::socket(io_context))
 	{
-
+		socket.open(asio::ip::udp::v4());
 	};
 
 	asio::ip::udp::endpoint Agent::ResolveEndpoint(std::string ipString) {
 		asio::ip::udp::resolver resolver(io_context);
 
-		return *resolver.resolve(asio::ip::udp::v4(), ipString, "pong").begin();
+		return *resolver.resolve(asio::ip::udp::v4(), ipString, "13").begin();
 	}
 
 	size_t Agent::SendPacket(Packet& p) {

@@ -3,13 +3,12 @@
 #include <boost/array.hpp>
 #include <vector>
 
-#define PACKET_TYPE_CONNREQ 1;
-#define PACKET_TYPE_CONNRES 2;
-
 namespace net {
 	class Packet {
 	public:
 		static const uint8_t DEFAULT_PROTO_ID;
+		static const uint8_t TYPE_CONNREQ;
+		static const uint8_t TYPE_CONNRES;
 
 		Packet();
 		void SetProtocolId(uint8_t id);

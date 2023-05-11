@@ -2,6 +2,8 @@
 
 namespace net {
 	const uint8_t Packet::DEFAULT_PROTO_ID = 4;
+	const uint8_t Packet::TYPE_CONNREQ = 1;
+	const uint8_t Packet::TYPE_CONNRES = 2;
 
 	Packet::Packet() :
 		protocol_id(0),
@@ -22,7 +24,7 @@ namespace net {
 		std::vector<uint8_t> packetVector{ protocol_id, packet_type };
 		packetVector.push_back(data.size());
 		for (auto i : data) {
-			packetVector.push_back(data.at(i));
+			packetVector.push_back(i);
 		}
 		return packetVector;
 	}

@@ -5,5 +5,5 @@ if(Boost_FOUND)
 	add_executable (PongClient "main.cpp" "Client.cpp" "Client.h"     "common.h" "constants.h"            )
 endif()
 
-# target_link_libraries(PongClient PUBLIC net_common "${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/net_common")
-# target_include_directories(PongClient PUBLIC "${PROJECT_SOURCE_DIR}")
+target_link_libraries(PongClient PUBLIC net_common "${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/net_common")
+target_include_directories(PongClient PUBLIC "${PROJECT_SOURCE_DIR}")
