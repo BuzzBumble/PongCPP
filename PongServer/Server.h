@@ -17,9 +17,10 @@ public:
 	int ConnectClient(ip::udp::endpoint clientEndpoint);
 	void ReceiveMessage();
 
-	size_t SendConnectionPacket(int clientIndex, uint8_t packetType);
+	size_t SendConnectionPacket(ip::udp::endpoint clientEndpoint, uint8_t packetType);
 	size_t SendConnectionAccepted(int clientIndex);
-	size_t SendConnectionRejected(int clientIndex);
+	size_t SendConnectionRejected(ip::udp::endpoint clientEndpoint);
+	size_t SendConnectionExisting(int clientIndex);
 
 private:
 	int maxClients;

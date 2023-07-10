@@ -1,4 +1,5 @@
 #include "agent.h"
+#include <iostream>
 
 namespace net {
 	Agent::Agent(asio::io_context& io_context, std::string receiverIp, std::string receiverPort) :
@@ -38,6 +39,7 @@ namespace net {
 	}
 
 	size_t Agent::SendPacketTo(Packet& p, asio::ip::udp::endpoint endpoint) {
+		std::cout << "Sending to: " << endpoint.address().to_string() << ":" << endpoint.port() << std::endl;
 		return socket.send_to(asio::buffer(p.BuildPacketVector()), endpoint);
 	}
 

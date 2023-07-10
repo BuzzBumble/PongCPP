@@ -72,29 +72,43 @@ void Server::ReceiveMessage() {
 	}
 
 	if (p.GetPacketType() == net::Packet::TYPE_CONNREQ) {
-		int clientIndex = ConnectClient(remote_endpoint);
-		if (clientIndex != -1) {
-			SendConnectionAccepted(clientIndex);
+		int clientIndex = FindExistingClientIndex(remote_endpoint.address().to_v4());
+		if (clientIndex >= 0) {
+			SendConnectionExisting(clientIndex);
+			return;
 		}
-		else {
-			SendConnectionRejected(clientIndex);
+
+		if (clientIndex == -1) {
+			clientIndex = ConnectClient(remote_endpoint);
+			if (clientIndex >= 0) {
+				SendConnectionAccepted(clientIndex);
+			}
+			return;
 		}
+
+		SendConnectionRejected(remote_endpoint);
 	}
 }
 
-size_t Server::SendConnectionPacket(int index, uint8_t packetType) {
+size_t Server::SendConnectionPacket(ip::udp::endpoint clientEndpoint, uint8_t packetType) {
 	net::Packet p = net::Packet{ net::Packet::DEFAULT_PROTO_ID, packetType };
-	std::vector<uint8_t> data = { static_cast<uint8_t>(index) };
+	if (packetType != net::Packet::TYPE_CONNREJECT) {
+		int index = FindExistingClientIndex(clientEndpoint.address().to_v4());
+		std::vector<uint8_t> data = { static_cast<uint8_t>(index) };
+		p.SetData(data);
+	}
 
-	p.SetData(data);
-
-	return agent.SendPacketTo(p, clientEndpoints[index]);
+	return agent.SendPacketTo(p, clientEndpoint);
 }
 
 size_t Server::SendConnectionAccepted(int index) {
-	return SendConnectionPacket(index, net::Packet::TYPE_CONNACCEPT);
+	return SendConnectionPacket(clientEndpoints[index], net::Packet::TYPE_CONNACCEPT);
 }
 
-size_t Server::SendConnectionRejected(int index) {
-	return SendConnectionPacket(index, net::Packet::TYPE_CONNREJECT);
+size_t Server::SendConnectionRejected(ip::udp::endpoint clientEndpoint) {
+	return SendConnectionPacket(clientEndpoint, net::Packet::TYPE_CONNREJECT);
+}
+
+size_t Server::SendConnectionExisting(int index) {
+	return SendConnectionPacket(clientEndpoints[index], net::Packet::TYPE_CONNEXISTING);
 }

@@ -10,6 +10,7 @@ namespace net {
 		static const uint8_t TYPE_CONNREQ;
 		static const uint8_t TYPE_CONNACCEPT;
 		static const uint8_t TYPE_CONNREJECT;
+		static const uint8_t TYPE_CONNEXISTING;
 
 		Packet();
 		Packet(uint8_t protocolId, uint8_t packetType);

@@ -5,6 +5,7 @@ namespace net {
 	const uint8_t Packet::TYPE_CONNREQ = 1;
 	const uint8_t Packet::TYPE_CONNACCEPT = 2;
 	const uint8_t Packet::TYPE_CONNREJECT = 3;
+	const uint8_t Packet::TYPE_CONNEXISTING = 4;
 
 	Packet::Packet() :
 		protocol_id(0),
