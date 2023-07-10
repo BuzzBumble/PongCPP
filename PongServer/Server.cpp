@@ -72,18 +72,29 @@ void Server::ReceiveMessage() {
 	}
 
 	if (p.GetPacketType() == net::Packet::TYPE_CONNREQ) {
-		int res = ConnectClient(remote_endpoint);
-		if (res != -1) {
-			SendConnectionAccepted(res);
+		int clientIndex = ConnectClient(remote_endpoint);
+		if (clientIndex != -1) {
+			SendConnectionAccepted(clientIndex);
+		}
+		else {
+			SendConnectionRejected(clientIndex);
 		}
 	}
 }
 
-size_t Server::SendConnectionAccepted(int index) {
-	net::Packet p = net::Packet{ net::Packet::DEFAULT_PROTO_ID, net::Packet::TYPE_CONNACCEPT };
+size_t Server::SendConnectionPacket(int index, uint8_t packetType) {
+	net::Packet p = net::Packet{ net::Packet::DEFAULT_PROTO_ID, packetType };
 	std::vector<uint8_t> data = { static_cast<uint8_t>(index) };
-	
+
 	p.SetData(data);
 
 	return agent.SendPacketTo(p, clientEndpoints[index]);
+}
+
+size_t Server::SendConnectionAccepted(int index) {
+	return SendConnectionPacket(index, net::Packet::TYPE_CONNACCEPT);
+}
+
+size_t Server::SendConnectionRejected(int index) {
+	return SendConnectionPacket(index, net::Packet::TYPE_CONNREJECT);
 }
