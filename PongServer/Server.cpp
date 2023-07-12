@@ -14,9 +14,9 @@ int Server::FindFreeClientIndex() const {
 	return -1;
 }
 
-int Server::FindExistingClientIndex(const ip::address_v4& address) const {
+int Server::FindExistingClientIndex(const ip::udp::endpoint& endpoint) const {
 	for (int i = 0; i < MaxClients; ++i) {
-		if (clientConnected[i] && GetClientEndpoint(i).address().to_v4() == address)
+		if (clientConnected[i] && GetClientEndpoint(i) == endpoint)
 			return i;
 	}
 	return -1;
@@ -41,7 +41,7 @@ int Server::ConnectClient(ip::udp::endpoint clientEndpoint) {
 
 	int i = FindFreeClientIndex();
 	if (i >= 0) {
-		if (FindExistingClientIndex(clientEndpoint.address().to_v4()) != -1) {
+		if (FindExistingClientIndex(clientEndpoint) != -1) {
 			std::cout << "Client is already connected." << std::endl;
 			return -1;
 		}
@@ -72,7 +72,7 @@ void Server::ReceiveMessage() {
 	}
 
 	if (p.GetPacketType() == net::Packet::TYPE_CONNREQ) {
-		int clientIndex = FindExistingClientIndex(remote_endpoint.address().to_v4());
+		int clientIndex = FindExistingClientIndex(remote_endpoint);
 		if (clientIndex >= 0) {
 			SendConnectionExisting(clientIndex);
 			return;
@@ -93,7 +93,7 @@ void Server::ReceiveMessage() {
 size_t Server::SendConnectionPacket(ip::udp::endpoint clientEndpoint, uint8_t packetType) {
 	net::Packet p = net::Packet{ net::Packet::DEFAULT_PROTO_ID, packetType };
 	if (packetType != net::Packet::TYPE_CONNREJECT) {
-		int index = FindExistingClientIndex(clientEndpoint.address().to_v4());
+		int index = FindExistingClientIndex(clientEndpoint);
 		std::vector<uint8_t> data = { static_cast<uint8_t>(index) };
 		p.SetData(data);
 	}

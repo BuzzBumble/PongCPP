@@ -10,7 +10,7 @@ public:
 	Server(net::Agent& agent);
 	int FindFreeClientIndex() const;
 
-	int FindExistingClientIndex(const ip::address_v4& address) const;
+	int FindExistingClientIndex(const ip::udp::endpoint& endpoint) const;
 	bool IsClientConnected(int clientIndex) const;
 	const ip::address_v4& GetClientAddress(int clientIndex) const;
 	const ip::udp::endpoint GetClientEndpoint(int clientIndex) const;
