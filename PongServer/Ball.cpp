@@ -30,7 +30,9 @@ void Ball::Init() {
 }
 
 void Ball::Draw() {
-	DrawCircleV(pos, radius, fillColor);
+	if (!isHidden) {
+		DrawCircleV(pos, radius, fillColor);
+	}
 }
 
 void Ball::Move() {

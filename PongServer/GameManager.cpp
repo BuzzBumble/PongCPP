@@ -8,6 +8,7 @@ GameManager::GameManager(Paddle& p1, Paddle& p2, Ball& ball) :
 	p2Score(0),
 	client(Client{ boost::asio::io_context{} })
 {
+	tick = Tick();
 	gameState = State::Paused;
 	canvas = Canvas::GetInstance();
 }
@@ -28,14 +29,26 @@ void GameManager::Init() {
 
 void GameManager::Run() {
 	while (!WindowShouldClose()) {
-		Update();
-	}
+		tick.SetNewTick();
+		Draw();
+		while (tick.GetLastTickTime + Tick::MS_PER_TICK < Tick::CurrentTimeInMS) {
+			Update();
+			tick.AddTime(MS_PER_TICK);
+		}
 	Quit();
 }
 
-void GameManager::Update() {
+void GameManager::Draw() {
 	BeginDrawing();
 	canvas->Clear();
+	p1.Draw();
+	p2.Draw();
+	ball.Draw();
+	canvas->DrawScore(p1Score, p2Score);
+	EndDrawing();
+}
+
+void GameManager::Update() {
 	if (IsKeyPressed(KEY_SPACE)) {
 		if (gameState == Paused) {
 			Unpause();
@@ -57,13 +70,10 @@ void GameManager::Update() {
 		Pause();
 	}
 
-	canvas->DrawScore(p1Score, p2Score);
 	p1.Update();
 	p2.Update();
 	ball.Update();
 	handleInputs();
-
-	EndDrawing();
 }
 
 void GameManager::handleInputs() {

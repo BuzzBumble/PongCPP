@@ -51,7 +51,9 @@ Paddle::Direction Paddle::GetDirection() const {
 }
 
 void Paddle::Draw() {
-	DrawRectangleV(pos, dimensions, fillColor);
+	if (!isHidden) {
+		DrawRectangleV(pos, dimensions, fillColor);
+	}
 }
 
 const Color& Paddle::GetFillColor() {
@@ -59,9 +61,6 @@ const Color& Paddle::GetFillColor() {
 }
 
 void Paddle::Update() {
-	if (!isHidden) {
-		Draw();
-	}
 	if (!paused) {
 		updateRectangle();
 		if (!isCollidable) {

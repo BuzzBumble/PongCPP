@@ -35,7 +35,7 @@ const ip::udp::endpoint Server::GetClientEndpoint(int clientIndex) const {
 }
 
 int Server::ConnectClient(ip::udp::endpoint clientEndpoint) {
-	if (numClientsConnected == maxClients) {
+	if (numClientsConnected >= maxClients) {
 		return -1;
 	}
 
@@ -82,11 +82,10 @@ void Server::ReceiveMessage() {
 			clientIndex = ConnectClient(remote_endpoint);
 			if (clientIndex >= 0) {
 				SendConnectionAccepted(clientIndex);
+				return;
 			}
-			return;
+			SendConnectionRejected(remote_endpoint);
 		}
-
-		SendConnectionRejected(remote_endpoint);
 	}
 }
 

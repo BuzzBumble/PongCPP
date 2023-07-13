@@ -4,6 +4,7 @@
 #include "Ball.h"
 #include "Canvas.h"
 #include "Client.h"
+#include "Tick.h"
 
 class GameManager {
 public:
@@ -18,6 +19,7 @@ public:
 	void Start();
 	void Init();
 	void Run();
+	void Draw();
 	void Update();
 	void Quit();
 	void Pause();
@@ -34,6 +36,7 @@ private:
 	Canvas* canvas;
 	State gameState;
 	Client& client;
+	Tick tick;
 
 	void handleInputs();
 	void updateServer();
